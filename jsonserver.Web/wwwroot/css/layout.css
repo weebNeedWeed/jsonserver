@@ -1,0 +1,159 @@
+﻿/* ==================== Font Import ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+/* ==================== End Font Import ==================== */
+
+
+/* ==================== Header ==================== */
+
+.nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    justify-content: space-between;
+}
+
+.nav__logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 35px;
+}
+
+.nav__list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.nav__link {
+    color: #000000;
+    font-size: 16px;
+}
+
+.nav__link::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #000000;
+    bottom: -2px;
+    left: 0;
+    transition: all .2s;
+    opacity: 0;
+    border-radius: 2px;
+}
+
+.nav__link:hover {
+    border: none;
+    color: #000000;
+    text-decoration: none;
+}
+
+.nav__item {
+    padding: 0 2px;
+    position: relative;
+}
+
+.nav__item:hover .nav__link::after {
+    bottom: 0;
+    opacity: 80%;
+}
+
+.nav__item:not(:last-child) {
+    margin-right: 30px;
+}
+
+/* mobile */
+
+.mobile-nav__menu-btn, .mobile-nav__list, .nav-bg-dark {
+    display: none;
+}
+
+.mobile-nav__menu-btn {
+    position: fixed;
+    border: none;
+    font-size: 25px;
+    background-color:transparent;
+    z-index: 1002;
+    right: 10px;
+}
+
+body {
+    position: relative;
+}
+
+.mobile-nav__item {
+    position: relative;
+    padding: 0 2px;
+}
+
+.nav-bg-dark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1000;
+}
+
+.mobile-nav__list {
+    position: fixed;
+    width: min(400px, 75vw);
+    background-color: white;
+    right: -100%;
+    top: 0;
+    z-index: 1001;
+    margin: 0;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    padding: 0;
+    transition: all .2s;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.mobile-nav__link {
+    color: #000000;
+    font-size: 16px;
+}
+
+.mobile-nav__link::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #000000;
+    bottom: -2px;
+    left: 0;
+    transition: all .2s;
+    opacity: 0;
+    border-radius: 2px;
+}
+
+.mobile-nav__link:hover {
+    border: none;
+    color: #000000;
+    text-decoration: none;
+}
+
+.mobile-nav__item:hover .mobile-nav__link::after, .mobile-nav__link:active::after {
+    bottom: 0;
+    opacity: 80%;
+}
+
+@media only screen and (max-width: 768px){
+    .mobile-nav__menu-btn {
+        display: block;
+    }
+
+    .nav__list {
+        display: none;
+    }
+}
+
+/* ==================== End Header ====================*/

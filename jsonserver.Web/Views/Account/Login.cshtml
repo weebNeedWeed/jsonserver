@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - jsonserver.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Account/Login.css" />
+</head>
+<body>
+    <main class="container-md">
+        <div class="login-box">
+            <div class="avatar-box">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <span class="logo">Json</span>
+
+            <a class="login-button" href="@ViewData["github_auth_url"]">
+                <span class="login-button-logo">
+                    <i class="fa-brands fa-github"></i>
+                </span>
+                <span class="login-button-text">Login with github</span>
+            </a>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/js/Account/Login.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - jsonserver.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+</head>
+<body>
+    <header>
+        <div class="container-md">
+            <nav class="nav">
+                <span class="nav__logo">Json</span>
+
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a class="nav__link" href="#">Home</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a class="nav__link" href="#">About</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a class="nav__link" href="#">User</a>
+                    </li>
+                </ul>
+
+                <button class="mobile-nav__menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+
+        <div class="nav-bg-dark"></div>
+
+        <ul class="mobile-nav__list">
+            <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="#">Home</a>
+            </li>
+
+            <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="#">About</a>
+            </li>
+
+            <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="#">User</a>
+            </li>
+        </ul>
+    </header>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/js/layout.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false);
+</body>
+</html>
