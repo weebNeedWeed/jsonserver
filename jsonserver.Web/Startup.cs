@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using jsonserver.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
+using jsonserver.Data.Repositories;
+using jsonserver.Data.Repositories.Interfaces;
+using jsonserver.Web.Extensions;
 
 namespace jsonserver.Web
 {
@@ -28,6 +31,9 @@ namespace jsonserver.Web
                 options.UseSqlServer(connectionString: Configuration.GetConnectionString("DefaultConnection"),
                                      x => x.MigrationsAssembly("jsonserver.Data"));
             });
+
+            // Register service to DI container
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Configure session
             services.AddDistributedMemoryCache();
@@ -61,7 +67,8 @@ namespace jsonserver.Web
 
             app.UseSession();
 
-            app.UseAuthorization();
+            // use custom middlewares
+            app.UseCustomAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

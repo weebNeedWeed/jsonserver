@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using jsonserver.Web.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace jsonserver.Web.Controllers
 {
@@ -7,6 +8,8 @@ namespace jsonserver.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            string userName = HttpContext.Session.Get<string>("UserName");
+            ViewData["UserName"] = userName;
             return View();
         }
     }
