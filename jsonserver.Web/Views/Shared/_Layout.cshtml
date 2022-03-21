@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
+    @await RenderSectionAsync(name: "Css", required: false)
 </head>
 <body>
-    <header>
+    <header class="header">
         <div class="container-md">
             <nav class="nav">
                 <span class="nav__logo">Json</span>
@@ -51,15 +52,17 @@
         </ul>
     </header>
 
-    <div>
-        @RenderBody()
-    </div>
+    <main class="container-md">
+        <div class="main-inner">
+            @RenderBody()
+        </div>
+    </main>
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/js/layout.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false);
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

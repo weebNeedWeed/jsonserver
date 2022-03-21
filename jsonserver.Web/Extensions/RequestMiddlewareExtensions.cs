@@ -9,5 +9,10 @@ namespace jsonserver.Web.Extensions
         {
             return builder.UseMiddleware<CustomAuthenticationMiddleware>();
         }
+
+        public static IApplicationBuilder UseNotFoundPage(this IApplicationBuilder builder, string path)
+        {
+            return builder.UseMiddleware<NotFoundPageMiddleware>(path);
+        }
     }
 }

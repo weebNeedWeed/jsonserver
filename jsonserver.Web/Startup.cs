@@ -1,14 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using jsonserver.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
 using jsonserver.Data.Repositories;
 using jsonserver.Data.Repositories.Interfaces;
 using jsonserver.Web.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 
 namespace jsonserver.Web
 {
@@ -60,6 +60,9 @@ namespace jsonserver.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseNotFoundPage("/404");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

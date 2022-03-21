@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using jsonserver.Data.Entities;
+using jsonserver.Data.Repositories.Interfaces;
+using jsonserver.Web.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -7,9 +10,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using jsonserver.Data.Repositories.Interfaces;
-using jsonserver.Data.Entities;
-using jsonserver.Web.Extensions;
+using jsonserver.Web.Attributes;
 
 namespace jsonserver.Web.Controllers
 {
@@ -111,6 +112,13 @@ namespace jsonserver.Web.Controllers
             }
 
             return RedirectToAction(controllerName: "Account", actionName: "Login");
+        }
+
+        [HttpGet]
+        [CustomAuthorize]
+        public IActionResult Dashboard()
+        {
+            return View();
         }
     }
 }

@@ -12,5 +12,12 @@ namespace jsonserver.Web.Controllers
             ViewData["UserName"] = userName;
             return View();
         }
+
+        [HttpGet]
+        [Route("/404")]
+        public string NotFoundPage()
+        {
+            return "404 - error";
+        }
     }
 }
