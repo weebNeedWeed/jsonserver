@@ -17,10 +17,15 @@ namespace jsonserver.Data.Configurations
             builder.Property(x => x.UserId)
                 .IsRequired();
 
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(10);
+
             builder
                 .HasOne(x => x.User)
                 .WithMany(x => x.Jsons)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

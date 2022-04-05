@@ -34,6 +34,7 @@ namespace jsonserver.Web
 
             // Register service to DI container
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJsonRepository, JsonRepository>();
 
             // Configure session
             services.AddDistributedMemoryCache();

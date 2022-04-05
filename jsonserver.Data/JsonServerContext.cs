@@ -15,5 +15,6 @@ namespace jsonserver.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Json> Jsons { get; set; }
     }
 }

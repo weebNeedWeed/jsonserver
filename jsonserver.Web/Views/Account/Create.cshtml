@@ -1,0 +1,35 @@
+﻿@model jsonserver.Web.ViewModels.CreateJsonViewModel
+@{
+    ViewData["title"] = "Create New Json";
+}
+
+@section Css {
+<link rel="stylesheet" href="~/css/Account/Create.css" />
+}
+
+<div class="container-md">
+    <form class="form" asp-action="Create" asp-controller="Account" method="POST">
+        <h2 class="form__title">Create New Json</h2>
+
+        <div class="form-group form__group">
+            <label class="form__label" asp-for="Name">Name</label>
+            <input placeholder="my json etc" asp-for="Name" class="form-control form__input">
+
+            <div style="text-align: left">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="form__submit">
+            Submit <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="clearfix"></div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidatePartial" />
+
+    <script src="~/js/Account/Create.js" type="text/javascript"></script>
+}

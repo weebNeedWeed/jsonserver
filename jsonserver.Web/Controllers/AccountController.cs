@@ -1,6 +1,9 @@
-﻿using jsonserver.Data.Entities;
+﻿using jsonserver.Data;
+using jsonserver.Data.Entities;
 using jsonserver.Data.Repositories.Interfaces;
+using jsonserver.Web.Attributes;
 using jsonserver.Web.Extensions;
+using jsonserver.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +13,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using jsonserver.Web.Attributes;
 
 namespace jsonserver.Web.Controllers
 {
@@ -18,15 +20,19 @@ namespace jsonserver.Web.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly IJsonRepository _jsonRepository;
+        private readonly JsonServerContext _context;
 
-        public AccountController(IConfiguration configuration, IUserRepository userRepository)
+        public AccountController(IConfiguration configuration, IUserRepository userRepository, IJsonRepository jsonRepository, JsonServerContext context)
         {
             _configuration = configuration;
             _userRepository = userRepository;
+            _jsonRepository = jsonRepository;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login([FromQuery]string ReturnUrl)
         {
             string baseUrl = "https://github.com/login/oauth/authorize";
             string client_id = _configuration.GetValue<string>("Github:client_id");
@@ -39,6 +45,8 @@ namespace jsonserver.Web.Controllers
             string newUrl = new Uri(QueryHelpers.AddQueryString(baseUrl, paramList)).ToString();
 
             ViewData["github_auth_url"] = newUrl;
+
+            TempData["ReturnUrl"] = ReturnUrl;
 
             return View();
         }
@@ -102,6 +110,11 @@ namespace jsonserver.Web.Controllers
                         HttpContext.Session.Set<string>("UserName", userName);
                         HttpContext.Session.Set<string>("AccessToken", (string)(jsonData.access_token.ToString()));
 
+                        if(TempData["ReturnUrl"] != null)
+                        {
+                            return Redirect((string)TempData["ReturnUrl"]);
+                        }
+
                         return RedirectToAction(controllerName: "Home", actionName: "Index");
                     }
 
@@ -116,9 +129,59 @@ namespace jsonserver.Web.Controllers
 
         [HttpGet]
         [CustomAuthorize]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
+        {
+            DashboardViewModel dashboardViewModel = new DashboardViewModel()
+            {
+                Jsons = await _jsonRepository.GetAllAsync()
+            };
+            
+            return View(dashboardViewModel);
+        }
+
+
+        [HttpGet]
+        [CustomAuthorize]
+        public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Create(CreateJsonViewModel createJsonViewModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(createJsonViewModel);
+            }
+
+            Json json = await _jsonRepository.GetByNameAsync(createJsonViewModel.Name);
+
+            // If json already existed, show error
+            if (json != null)
+            {
+                ModelState.AddModelError("", "Json Already Existed");
+                return View(createJsonViewModel);
+            }
+
+            string userName = HttpContext.Session.Get<string>("UserName");
+
+            User currUser = await _userRepository.GetByUserNameAsync(userName);
+
+            var newJson = new Json()
+            {
+                Name = createJsonViewModel.Name,
+                Content = "[]",
+                UserId = currUser.UserId
+            };
+
+            await _jsonRepository.AddAsync(newJson);
+
+            TempData["SuccessMessage"] = "Successfully created new json!";
+
+            return RedirectToAction(actionName: "Dashboard", controllerName: "Account");
         }
     }
 }

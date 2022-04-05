@@ -2,40 +2,41 @@
 using jsonserver.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace jsonserver.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class JsonRepository: IJsonRepository
     {
         private readonly JsonServerContext _context;
 
-        public UserRepository(JsonServerContext context)
+        public JsonRepository(JsonServerContext context)
         {
             _context = context;
         }
 
-        public Task<User> GetByEmailAsync(string email)
+        public Task<Json> GetByNameAsync(string name)
         {
-            return _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return _context.Jsons.FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public Task<User> GetByUserNameAsync(string userName)
-        {
-            return _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-        }
-
-        public async Task AddAsync(User user)
+        public async Task AddAsync(Json json)
         {
             try
             {
-                await _context.AddAsync(user);
+                await _context.Jsons.AddAsync(json);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public Task<List<Json>> GetAllAsync()
+        {
+            return _context.Jsons.ToListAsync();
         }
     }
 }
