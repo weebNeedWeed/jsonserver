@@ -15,7 +15,10 @@ namespace jsonserver.Data.Configurations
 
             builder.Property(x => x.Email)
                 .IsRequired();
-             
+
+            builder.Property(x => x.ApiKey)
+                .IsRequired()
+                .HasMaxLength(32);
         }
     }
 }

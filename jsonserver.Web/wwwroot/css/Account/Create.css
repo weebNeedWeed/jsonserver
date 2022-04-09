@@ -52,3 +52,10 @@
 .form__submit:active {
     transform: translate(-10px, 0);
 }
+
+.validation-summary-errors ul {
+    list-style-type: none;
+    color: red;
+    padding: 0;
+    font-size: 20px;
+}

@@ -103,7 +103,8 @@ namespace jsonserver.Web.Controllers
                             await _userRepository.AddAsync(new User
                             {
                                 UserName = userName,
-                                Email = email
+                                Email = email,
+                                ApiKey = Guid.NewGuid().ToString().Replace("-", "")
                             });
                         }
 
@@ -131,9 +132,14 @@ namespace jsonserver.Web.Controllers
         [CustomAuthorize]
         public async Task<IActionResult> Dashboard()
         {
+            string userName = HttpContext.Session.Get<string>("UserName");
+
+            User currUser = await _userRepository.GetByUserNameAsync(userName);
+
             DashboardViewModel dashboardViewModel = new DashboardViewModel()
             {
-                Jsons = await _jsonRepository.GetAllAsync()
+                Jsons = await _jsonRepository.GetAllAsync(),
+                ApiKey = currUser.ApiKey
             };
             
             return View(dashboardViewModel);
@@ -162,7 +168,7 @@ namespace jsonserver.Web.Controllers
             // If json already existed, show error
             if (json != null)
             {
-                ModelState.AddModelError("", "Json Already Existed");
+                ModelState.AddModelError("", "Json Already Existed!");
                 return View(createJsonViewModel);
             }
 
@@ -182,6 +188,14 @@ namespace jsonserver.Web.Controllers
             TempData["SuccessMessage"] = "Successfully created new json!";
 
             return RedirectToAction(actionName: "Dashboard", controllerName: "Account");
+        }
+
+
+        [HttpDelete]
+        [CustomAuthorize]
+        public async Task DeleteJson([FromForm]int jsonId)
+        {
+            await _jsonRepository.DeleteByIdAsync(jsonId);
         }
     }
 }

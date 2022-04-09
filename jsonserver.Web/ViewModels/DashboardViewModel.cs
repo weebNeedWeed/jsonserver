@@ -6,5 +6,6 @@ namespace jsonserver.Web.ViewModels
     public class DashboardViewModel
     {
         public List<Json> Jsons { get; set; }
+        public string ApiKey { get; set; }
     }
 }

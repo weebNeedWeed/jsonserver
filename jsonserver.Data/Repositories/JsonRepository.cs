@@ -38,5 +38,16 @@ namespace jsonserver.Data.Repositories
         {
             return _context.Jsons.ToListAsync();
         }
+
+        public async Task DeleteByIdAsync(int jsonId)
+        {
+            Json json = await _context.Jsons.FirstOrDefaultAsync(x => x.JsonId == jsonId);
+            
+            if(json != null)
+            {
+                _context.Remove(json);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

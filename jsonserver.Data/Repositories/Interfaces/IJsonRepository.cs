@@ -11,5 +11,7 @@ namespace jsonserver.Data.Repositories.Interfaces
         Task AddAsync(Json json);
 
         Task<List<Json>> GetAllAsync();
+
+        Task DeleteByIdAsync(int jsonId);
     }
 }
