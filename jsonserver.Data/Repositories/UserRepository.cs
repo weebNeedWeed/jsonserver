@@ -37,5 +37,10 @@ namespace jsonserver.Data.Repositories
                 throw;
             }
         }
+
+        public Task<User> GetByApiKeyAsync(string apiKey)
+        {
+            return _context.Users.Include(x => x.Jsons).FirstOrDefaultAsync(x => x.ApiKey == apiKey);
+        }
     }
 }

@@ -20,7 +20,9 @@ namespace jsonserver.Web.Middlewares
 
             int statusCode = context.Response.StatusCode;
 
-            if(statusCode == 404)
+            string currPath = context.Request.Path;
+
+            if(statusCode == 404 && !currPath.Contains("/api"))
             {
                 context.Response.Redirect(_path);
             }

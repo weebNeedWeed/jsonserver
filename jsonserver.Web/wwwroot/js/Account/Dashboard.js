@@ -4,7 +4,7 @@
         url: "/Account/DeleteJson",
         method: "DELETE",
         data: {
-            jsonId
+            jsonId: jsonId
         },
         success: () => {
             location.reload();
