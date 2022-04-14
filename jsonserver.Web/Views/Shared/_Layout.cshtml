@@ -26,7 +26,7 @@
                         <a class="nav__link" asp-controller="Account" asp-action="Dashboard">Dashboard</a>
                     </li>
 
-                    @if(Context.Session.Get<string>("UserName") != null)
+                    @if (Context.Session.Get<string>("UserName") != null)
                     {
                         <li class="nav__item">
                             <a class="nav__link" href="#">@Html.Raw(Context.Session.Get<string>("UserName"))</a>
@@ -38,7 +38,7 @@
                             <a class="nav__link" asp-action="Login" asp-controller="Account">Login</a>
                         </li>
                     }
-                    
+
                 </ul>
 
                 <button class="mobile-nav__menu-btn">
@@ -51,16 +51,25 @@
 
         <ul class="mobile-nav__list">
             <li class="mobile-nav__item">
-                <a class="mobile-nav__link" href="#">Home</a>
+                <a class="mobile-nav__link" asp-controller="Home" asp-action="Index">Home</a>
             </li>
 
             <li class="mobile-nav__item">
-                <a class="mobile-nav__link" href="#">About</a>
+                <a class="mobile-nav__link" asp-controller="Account" asp-action="Dashboard">Dashboard</a>
             </li>
 
-            <li class="mobile-nav__item">
-                <a class="mobile-nav__link" href="#">User</a>
-            </li>
+            @if (Context.Session.Get<string>("UserName") != null)
+            {
+                <li class="mobile-nav__item">
+                    <a class="mobile-nav__link" href="#">@Html.Raw(Context.Session.Get<string>("UserName"))</a>
+                </li>
+            }
+            else
+            {
+                <li class="mobile-nav__item">
+                    <a class="mobile-nav__link" asp-action="Login" asp-controller="Account">Login</a>
+                </li>
+            }
         </ul>
     </header>
 
