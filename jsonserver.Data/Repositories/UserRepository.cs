@@ -42,5 +42,10 @@ namespace jsonserver.Data.Repositories
         {
             return _context.Users.Include(x => x.Jsons).FirstOrDefaultAsync(x => x.ApiKey == apiKey);
         }
+
+        public Task<User> GetByGithubIdAsync(int githubId)
+        {
+            return _context.Users.FirstOrDefaultAsync(x => x.GithubId == githubId);
+        }
     }
 }

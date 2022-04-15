@@ -8,6 +8,7 @@ namespace jsonserver.Data.Entities
         public string Email { get; set; }
         public string UserName { get; set; }
         public string ApiKey { get; set; }
+        public int GithubId { get; set; }
         public ICollection<Json> Jsons { get; set; }
     }
 }

@@ -103,15 +103,17 @@ namespace jsonserver.Web.Controllers
 
                         string userName = userDataJson.login.ToString();
                         string email = userDataJson.email.ToString();
+                        int githubId  = Convert.ToInt32(userDataJson.id.ToString());
 
                         // User Data not already in db
-                        if (await _userRepository.GetByEmailAsync(email) == null)
+                        if (await _userRepository.GetByGithubIdAsync(githubId) == null)
                         {
                             await _userRepository.AddAsync(new User
                             {
                                 UserName = userName,
                                 Email = email,
-                                ApiKey = Guid.NewGuid().ToString().Replace("-", "")
+                                ApiKey = Guid.NewGuid().ToString().Replace("-", ""),
+                                GithubId = githubId
                             });
                         }
 

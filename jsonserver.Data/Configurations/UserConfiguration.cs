@@ -19,6 +19,9 @@ namespace jsonserver.Data.Configurations
             builder.Property(x => x.ApiKey)
                 .IsRequired()
                 .HasMaxLength(32);
+
+            builder.Property(x => x.GithubId)
+                .IsRequired();
         }
     }
 }

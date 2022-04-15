@@ -8,7 +8,7 @@ namespace jsonserver.Data.Repositories.Interfaces
         Task<User> GetByEmailAsync(string email);
         Task<User> GetByUserNameAsync(string userName);
         Task AddAsync(User user);
-
         Task<User> GetByApiKeyAsync(string apiKey);
+        Task<User> GetByGithubIdAsync(int githubId);
     }
 }
