@@ -7,6 +7,7 @@ using jsonserver.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,15 @@ namespace jsonserver.Web.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IJsonRepository _jsonRepository;
         private readonly JsonServerContext _context;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IConfiguration configuration, IUserRepository userRepository, IJsonRepository jsonRepository, JsonServerContext context)
+        public AccountController(IConfiguration configuration, IUserRepository userRepository, IJsonRepository jsonRepository, JsonServerContext context, ILogger<AccountController> logger)
         {
             _configuration = configuration;
             _userRepository = userRepository;
             _jsonRepository = jsonRepository;
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -92,7 +95,11 @@ namespace jsonserver.Web.Controllers
 
                     if (userDataResponse.IsSuccessStatusCode)
                     {
-                        var userDataJson = JsonConvert.DeserializeObject(await userDataResponse.Content.ReadAsStringAsync());
+                        string _userDatajson = await userDataResponse.Content.ReadAsStringAsync();
+
+                        _logger.LogInformation(_userDatajson);
+
+                        dynamic userDataJson = JsonConvert.DeserializeObject(_userDatajson);
 
                         string userName = userDataJson.login.ToString();
                         string email = userDataJson.email.ToString();
