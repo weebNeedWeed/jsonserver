@@ -4,14 +4,13 @@ using jsonserver.Data.Repositories.Interfaces;
 using jsonserver.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using Microsoft.AspNetCore.HttpOverrides;
-using System.IO;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace jsonserver.Web
 {
@@ -61,8 +60,7 @@ namespace jsonserver.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            var path = Directory.GetCurrentDirectory();
-            loggerFactory.AddFile($"{path}\\Logs\\log.txt");
+            loggerFactory.AddFile("Logs/log.txt");
 
             if (env.IsDevelopment())
             {
