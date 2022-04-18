@@ -1,0 +1,40 @@
+﻿.box {
+    background-color: var(--color60);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main-inner {
+    padding-top: 50px;
+}
+
+.illustration {
+    width: 100%;
+}
+
+.box-title {
+    margin-top: 40px;
+    color: var(--color10);
+    font-weight: bold;
+}
+
+.step-description {
+    color: var(--color10);
+    font-size: 25px;
+}
+
+.step-description a {
+    color: var(--color10);
+    text-decoration: underline;
+}
+
+.main-title {
+    padding: 0 5px;
+    color: var(--color10);
+    font-weight: bold;
+    background-color: var(--color60);
+    display: inline-block;
+    font-size: 50px;
+}

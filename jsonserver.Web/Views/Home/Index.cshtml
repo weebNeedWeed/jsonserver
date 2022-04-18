@@ -2,7 +2,56 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["UserName"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Css {
+<link rel="stylesheet" href="~/css/Home/Index.css" />
+}
+
+<h1 class="main-title">How to use</h1>
+
+<div class="box">
+    <div class="row">
+        <div class="col-lg-9 col-sm-12">
+            <img src="~/images/home1.jpg" alt="Illustration 1" class="illustration" />
+        </div>
+
+        <div class="col-lg-3 col-sm-12">
+            <h3 class="box-title">Step 1:</h3>
+
+            <p class="step-description">
+                <a asp-action="Login" asp-controller="Account">Login</a> If you have not done this before!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div class="row">
+        <div class="col-lg-9 col-sm-12">
+            <img src="~/images/home2.jpg" alt="Illustration 2" class="illustration" />
+        </div>
+
+        <div class="col-lg-3 col-sm-12">
+            <h3 class="box-title">Step 2:</h3>
+
+            <p class="step-description">
+                Go to <a asp-action="Dashboard" asp-controller="Account">Dashboard</a> and start <a asp-action="Create" asp-controller="Account">Creating</a> your own Json!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div class="row">
+        <div class="col-lg-9 col-sm-12">
+            <img src="~/images/home3.jpg" alt="Illustration 3" class="illustration" />
+        </div>
+
+        <div class="col-lg-3 col-sm-12">
+            <h3 class="box-title">Step 3:</h3>
+
+            <p class="step-description">
+                Read our documentation and start using your Json!
+            </p>
+        </div>
+    </div>
 </div>
