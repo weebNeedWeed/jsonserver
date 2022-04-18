@@ -4,14 +4,14 @@
 
 .create-new {
     float: right;
-    border: 2px solid black;
+    border: 2px solid var(--color10);
     border-radius: 2px;
     padding: 5px 15px;
-    font-weight: 500;
+    font-weight: bold;
     background-color: transparent;
     position: relative;
     text-decoration: none;
-    color: #000;
+    color: var(--color10);
 }
 
 .create-new::after {
@@ -27,7 +27,7 @@
 }
 
 .create-new:hover {
-    color: #000;
+    color: var(--color10);
 }
 
 .create-new:hover:after {
@@ -48,6 +48,15 @@ thead tr th:nth-child(3) {
 
 table {
     margin-top: 50px;
+    background-color: #fff;
+}
+
+.table {
+    margin-bottom: 100px;
+}
+
+.table .thead-dark th{
+    background-color: var(--color10);
 }
 
 .action {
@@ -59,7 +68,7 @@ table {
 }
 
 .action:hover, action:active {
-    color: rgba(0,0,0,1);
+    color: var(--color10);
 }
 
 @keyframes Rotate {
@@ -76,6 +85,7 @@ table {
     border: none;
     outline: none;
     background-color: transparent;
+    color: var(--color10);
 }
 
 .reload:hover {

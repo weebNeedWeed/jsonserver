@@ -2,6 +2,8 @@
     width: 100%;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     padding: 50px 10px 10px;
+    background-color: var(--color60);
+    margin-bottom: 50px;
 }
 
 .form__title {
@@ -13,12 +15,14 @@
     letter-spacing: 2px;
     font-weight: 900;
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    color: var(--color10);
 }
 
 .form__label {
     display: block;
     text-align: left;
     margin: 0;
+    color: var(--color10);
 }
 
 .form__group {
@@ -38,7 +42,7 @@
     outline: none;
     border: none;
     background-color: transparent;
-    color: #0040ff;
+    color: var(--color10);
     font-size: 20px;
     box-sizing: border-box;
     border-bottom: 1px solid transparent;
@@ -46,7 +50,7 @@
 }
 
 .form__submit:hover {
-    border-bottom: 1px solid #0040ff;
+    border-bottom: 1px solid var(--color10);
 }
 
 .form__submit:active {
