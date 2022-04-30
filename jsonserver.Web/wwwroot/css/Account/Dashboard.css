@@ -94,6 +94,14 @@ table {
     animation-iteration-count: infinite;
 }
 
+.input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    width: 80%;
+    text-align:center;
+}
+
 @media only screen and (max-width: 576px){
     .create-new {
         float: left;

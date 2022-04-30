@@ -49,5 +49,14 @@ namespace jsonserver.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task EditNameAsync(int jsonId, string name)
+        {
+            Json json = await _context.Jsons.FirstOrDefaultAsync(x => x.JsonId == jsonId);
+
+            json.Name = name;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

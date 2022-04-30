@@ -13,5 +13,7 @@ namespace jsonserver.Data.Repositories.Interfaces
         Task<List<Json>> GetAllAsync();
 
         Task DeleteByIdAsync(int jsonId);
+
+        Task EditNameAsync(int jsonId, string name);
     }
 }

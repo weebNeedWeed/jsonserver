@@ -11,13 +11,14 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace jsonserver.Web.Controllers
 {
-    public class AccountController: Controller
+    public class AccountController : Controller
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
@@ -35,7 +36,7 @@ namespace jsonserver.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login([FromQuery]string ReturnUrl)
+        public IActionResult Login([FromQuery] string ReturnUrl)
         {
             string baseUrl = "https://github.com/login/oauth/authorize";
             string client_id = _configuration.GetValue<string>("Github:client_id");
@@ -55,7 +56,7 @@ namespace jsonserver.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Callback([FromQuery]string code)
+        public async Task<IActionResult> Callback([FromQuery] string code)
         {
             HttpClient httpClient = new HttpClient();
 
@@ -80,9 +81,9 @@ namespace jsonserver.Web.Controllers
             if (response.IsSuccessStatusCode)
             {
                 dynamic jsonData = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-                
+
                 // No error
-                if(jsonData.error == null)
+                if (jsonData.error == null)
                 {
                     httpClient.DefaultRequestHeaders.Clear();
 
@@ -97,13 +98,13 @@ namespace jsonserver.Web.Controllers
                     {
                         string _userDatajson = await userDataResponse.Content.ReadAsStringAsync();
 
-                        _logger.LogInformation(_userDatajson);
-
                         dynamic userDataJson = JsonConvert.DeserializeObject(_userDatajson);
+
+                        _logger.LogInformation($"{userDataJson.login} logged in.");
 
                         string userName = userDataJson.login.ToString();
                         string email = userDataJson.email.ToString();
-                        int githubId  = Convert.ToInt32(userDataJson.id.ToString());
+                        int githubId = Convert.ToInt32(userDataJson.id.ToString());
 
                         // User Data not already in db
                         if (await _userRepository.GetByGithubIdAsync(githubId) == null)
@@ -120,7 +121,7 @@ namespace jsonserver.Web.Controllers
                         HttpContext.Session.Set<string>("UserName", userName);
                         HttpContext.Session.Set<string>("AccessToken", (string)(jsonData.access_token.ToString()));
 
-                        if(TempData["ReturnUrl"] != null)
+                        if (TempData["ReturnUrl"] != null)
                         {
                             return Redirect((string)TempData["ReturnUrl"]);
                         }
@@ -131,7 +132,7 @@ namespace jsonserver.Web.Controllers
                     return RedirectToAction(controllerName: "Account", actionName: "Login");
                 }
 
-                return RedirectToAction(controllerName: "Account", actionName:"Login");
+                return RedirectToAction(controllerName: "Account", actionName: "Login");
             }
 
             return RedirectToAction(controllerName: "Account", actionName: "Login");
@@ -150,7 +151,7 @@ namespace jsonserver.Web.Controllers
                 Jsons = await _jsonRepository.GetAllAsync(),
                 ApiKey = currUser.ApiKey
             };
-            
+
             return View(dashboardViewModel);
         }
 
@@ -167,7 +168,7 @@ namespace jsonserver.Web.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Create(CreateJsonViewModel createJsonViewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(createJsonViewModel);
             }
@@ -202,9 +203,28 @@ namespace jsonserver.Web.Controllers
 
         [HttpDelete]
         [CustomAuthorize]
-        public async Task DeleteJson([FromForm]int jsonId)
+        public async Task DeleteJson([FromForm] int jsonId)
         {
             await _jsonRepository.DeleteByIdAsync(jsonId);
+        }
+
+        [HttpPut]
+        [CustomAuthorize]
+        public async Task<IActionResult> EditJson([FromForm]EditJsonViewModel editJsonViewModel) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (await _jsonRepository.GetByNameAsync(editJsonViewModel.Name) != null)
+            {
+                return BadRequest();
+            }
+
+            await _jsonRepository.EditNameAsync(editJsonViewModel.JsonId, editJsonViewModel.Name);
+
+            return Ok();
         }
     }
 }
